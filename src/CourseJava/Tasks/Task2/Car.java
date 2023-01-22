@@ -1,5 +1,5 @@
 package CourseJava.Tasks.Task2;
-//изменения
+
 public class Car {
    private String carModel;
    private String creatorName;
@@ -184,19 +184,19 @@ public class Car {
 
     public void print() {
         System.out.println("____" + creatorName + "____");
-        System.out.println("Model: " + carModel);
-        System.out.println("Type of engine: " + typeEngine);
-        System.out.println("Dimensions: " + length + "x" + width + "x" + height + "  Weight: " + weight);
-        System.out.println("Engine Power: " + enginePower);
-        System.out.println("Doors quantity: " + door);
-        System.out.println("Fuel spend: " + fuelSpend);
-        System.out.println("Lights quantity: " + light);
-        System.out.println("Volume engine: " + liter);
-        System.out.println("Mirror quantity: " + mirror);
-        System.out.println("Release auto: " + release);
-        System.out.println("Automatic transmission: " + transmission);
-        System.out.println("Acceleration time per 100 meters: " + speedTime);
-        System.out.println("Price: " + price + " RUB");
+        System.out.println("Модель: " + carModel);
+        System.out.println("Тип двигателя: " + typeEngine);
+        System.out.println("Габариты: " + length + "x" + width + "x" + height + "  Вес: " + weight);
+        System.out.println("Мощность двигателя: " + enginePower);
+        System.out.println("Количество дверей: " + door);
+        System.out.println("Расход топлива: " + fuelSpend);
+        System.out.println("Количество фар: " + light);
+        System.out.println("Объем двигателя: " + liter);
+        System.out.println("Количество зеркал: " + mirror);
+        System.out.println("Реализация автомобиля: " + release);
+        System.out.println("Автоматическая коробка передач: " + transmission);
+        System.out.println("Время разгона на 100 метров: " + speedTime);
+        System.out.println("Цена: " + price + " RUB");
     }
 
 //    public static void print(Car _car) {
