@@ -27,6 +27,10 @@ public class Car {
         this.creatorName = _creatorName;
     }
 
+    public Long getWidth() {
+        return width;
+    }
+
     public float getPrice() {
         return price;
     }
