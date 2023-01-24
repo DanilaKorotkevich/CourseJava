@@ -41,6 +41,16 @@ public class Runner {
         Boolean bln = true;
         Character chrctr = '1';
 
+        Integer x = new Integer(762);
+        String s = x.toString();
+        System.out.println(s);
+
+        String ss = "121234567";
+        Integer i = Integer.parseInt(ss);
+        System.out.println(i);
+
+
+
         //вывод переменных
 //        System.out.printf("byte: " + isByte1 + "\nshort: " + isShort1 + "\nlong: " + isLong1 + "\nint: " + isInt1 +
 //                "\nfloat: " + isFloat1 + "\ndouble: " + isDouble1 + "\nchar: " + isChar1 +
