@@ -1,4 +1,4 @@
-package CourseJava.Tasks.Task2;
+package CourseJava.tasks.task2;
 
 import java.util.Scanner;
 
@@ -49,16 +49,6 @@ public class Runner {
         Integer i = Integer.parseInt(ss);
         System.out.println(i);
 
-
-
-        //вывод переменных
-//        System.out.printf("byte: " + isByte1 + "\nshort: " + isShort1 + "\nlong: " + isLong1 + "\nint: " + isInt1 +
-//                "\nfloat: " + isFloat1 + "\ndouble: " + isDouble1 + "\nchar: " + isChar1 +
-//                "\nboolean: " + isBoolean1 + "\nString: " + isString1 + "\nInteger: " + intgr + "\nShort: " + shrt +
-//                "\nLong: " + lng + "\nByte: " + bt + "\nFloat: " + flt + "\nDouble: " + dbl + "\nBoolean: " + bln +
-//                "\nCharacter: " + chrctr + "\n\n");
-
-
         byte z = (byte) isShort1;
         int q = (int) isLong1;
         short g = (short) isInt1;
@@ -67,18 +57,6 @@ public class Runner {
         int t = (int) isFloat1;
         long e = (long) isDouble1;
         long a = (long) isFloat1;
-
-        // вывод переменных с преобразованием типов
-//        System.out.println("Преобразование типов:");
-//        System.out.println("byte -> short: " + z);
-//        System.out.println("short -> int: " + g);
-//        System.out.println("int -> long: " + q);
-//        System.out.println("char -> int: " + w);
-//        System.out.println("int -> double: " + r);
-//        System.out.println("int -> float: " + t);
-//        System.out.println("long -> double: " + e);
-//        System.out.println("long -> float: " + a + "\n\n");
-
 
         Car BMW = new Car("X6","BMW" );
         BMW.setTypeEngine("Diesel");
@@ -96,20 +74,6 @@ public class Runner {
         // использование метода print описанного в классе Car для вывода переменных
 //        BMW.print();
 //        Car.print(BMW);
-
-        //использование get для вывода переменных
-//        System.out.println("\n\nАвтомобиль: " + BMW.getCreatorName() + " " + BMW.getCarModel());
-//        System.out.println("Тип двигателя: " + BMW.getTypeEngine());
-//        System.out.println("Габариты: " + BMW.getLength() + "x" + BMW.getWidth() + "x" + BMW.getHeight() + "  Вес: " + BMW.getWeight());
-//        System.out.println("Мощность двигателя: " + BMW.getEnginePower());
-//        System.out.println("Количество дверей: " + BMW.getDoor());
-//        System.out.println("Расход топлива: " + BMW.getFuelSpend());
-//        System.out.println("Количество фар: " + BMW.getLight());
-//        System.out.println("Объем двигателя: " + BMW.getLiter());
-//        System.out.println("Количество зеркал: " + BMW.getMirror());
-//        System.out.println("Автоматическая коробка передач: " + BMW.getTransmission());
-//        System.out.println("Время разгона на 100 метров: " + BMW.getSpeedTime() + " сек.");
-//        System.out.println("Цена: " + BMW.getPrice() + " RUB");
 
         Scanner scanner = new Scanner(System.in);
             int chose;

@@ -1,4 +1,4 @@
-package CourseJava.Tasks.Task2;
+package CourseJava.tasks.task2;
 
 public class Car {
    private String carModel;
@@ -7,17 +7,17 @@ public class Car {
    private byte liter;
    private int door;
    private short wheel;
-   private long mileage; //пробег
-   private boolean release; //реализация
+   private long mileage;
+   private boolean release;
    private float weight;
    private double height;
-   private Byte light; //фары
-   private Integer mirror; //зеркала
+   private Byte light;
+   private Integer mirror;
    private Short enginePower;
    private Long length;
-   private Boolean transmission; //коробка передач
-   private Float speedTime; //время разгона
-   private Double fuelSpend; //расход топлива
+   private Boolean transmission;
+   private Float speedTime;
+   private Double fuelSpend;
    private boolean start;
    private Long width;
    private float price;
