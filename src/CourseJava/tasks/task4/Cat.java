@@ -1,6 +1,4 @@
-package CourseJava.Tasks.Task4;
-
-import java.util.Random;
+package CourseJava.tasks.task4;
 
 public class Cat {
     public static String defaultName = "Рыжик";

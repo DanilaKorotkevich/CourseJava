@@ -1,4 +1,4 @@
-package CourseJava.Tasks.Task4;
+package CourseJava.tasks.task4;
 
 import java.util.Random;
 
