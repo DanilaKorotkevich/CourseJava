@@ -1,6 +1,6 @@
-package CourseJava.Tasks.Task3.Runner;
+package CourseJava.tasks.task3.runner;
 
-import CourseJava.Tasks.Task3.Rainbow.Rainbow;
+import CourseJava.tasks.task3.rainbow.Rainbow;
 
 public class Runner {
 

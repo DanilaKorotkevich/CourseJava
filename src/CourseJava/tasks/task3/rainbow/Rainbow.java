@@ -1,4 +1,4 @@
-package CourseJava.Tasks.Task3.Rainbow;
+package CourseJava.tasks.task3.rainbow;
 
 import java.util.Scanner;
 
@@ -88,8 +88,11 @@ public class Rainbow {
                     default:
                         System.out.println("Такого сочитания нет\n");
                 }
+            } else if (chose == 0) {
+                break;
             }
         } while (color != 0);
+
         System.out.println("Вы вышли из программы");
     }
 
