@@ -1,6 +1,5 @@
 package CourseJava.Tasks.Task4;
 
-import java.util.Objects;
 import java.util.Random;
 
 public class Init {
