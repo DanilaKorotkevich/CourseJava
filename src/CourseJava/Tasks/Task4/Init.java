@@ -3,7 +3,7 @@ package CourseJava.Tasks.Task4;
 import java.util.Random;
 
 public class Init {
-   static Cat[] cats = new Cat[10];
+   static public Cat[] cats = new Cat[10];
 
     public static void run() {
 
