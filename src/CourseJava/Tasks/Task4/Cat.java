@@ -16,11 +16,7 @@ public class Cat {
     }
 
     public static String printDefaults() {
-        return "Имя по умолчанию:" + defaultName + ", возраст по умолчанию: " + defaultAge + " год";
-    }
-
-    public void print() {
-        System.out.println("Имя:" + name + ", возраст: " + age + " год");
+        return "Default name: " + defaultName + ", Default age: " + defaultAge;
     }
 
     public Cat() {
