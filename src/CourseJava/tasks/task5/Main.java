@@ -1,5 +1,10 @@
 package CourseJava.tasks.task5;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Main {
@@ -7,14 +12,15 @@ public class Main {
     private final String[] LETTER = new String[]
             {"ц","к","н","г","ш","щ","з","х","ф","в","п","р","л","д","ж","ч","с","м","т","б","у","е","ё","а","о","э","я","и","ю",
                     "Ц","К","Н","Г","Ш","Щ","З","Х","Ф","В","П","Р","Л","Д","Ж","Ч","С","М","Т","Б","У","Е","Ё","А","О","Э","Я","И","Ю"};
-
-    private String[][] mainArray = new String[10][10];
+    private final int TEN = 10;
+    private String[][] mainArray = new String[TEN][TEN];
+    private String[] diagArray = new String[TEN * 2];
 
     private final Random random = new Random();
 
     private String createRandomNumber() {
         String randNum;
-        randNum = String.valueOf(random.nextDouble(10));
+        randNum = String.valueOf((random.nextDouble(10))).substring(0,7);
         return randNum;
     }
 
@@ -29,14 +35,59 @@ public class Main {
     }
 
     public void fillMainArr() {
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
-                if (((i + j) % 3) == 0) mainArray[i][j] = createRandomNumber();
+        int x = 1;
+        for (int i = 0; i < TEN; i++) {
+            for (int j = 0; j < TEN; j++) {
+                if ((x % 3) == 0) mainArray[i][j] = createRandomNumber();
                 else mainArray[i][j] = createRandomWord();
                 System.out.printf(mainArray[i][j] + " ");
+                x++;
             }
             System.out.println(" ");
         }
     }
 
+    public void equalsDiag() {
+        boolean isSame = true;
+        int i = 0;
+        while (isSame && i < TEN) {
+            isSame = diagArray[i].equals(diagArray[TEN + i]);
+            i++;
+        }
+        System.out.println("\nequals diagonals is " + isSame);
+    }
+
+    public void createDiagArr() {
+        for (int i = 0; i < TEN; i++) {
+            diagArray[i] = mainArray[i][i];
+            diagArray[TEN + i] = mainArray[(TEN-1)-i][i];
+        }
+       printDiagArr(false);
+    }
+
+    public void printDiagArr(boolean isUnderscore) {
+        System.out.println("");
+        String underscore = "";
+        for (int i = 0; i < TEN * 2; i++) {
+            System.out.printf(!isUnderscore ? " \n" + diagArray[i] : underscore + diagArray[i]);
+            underscore = "_";
+        }
+    }
+
+    public void point3_1() {
+        ArrayList<String> NumArray = new ArrayList<String>();
+        StringBuilder resultString = new StringBuilder();
+        String delimiter = "";
+        for (int i = 0; i < TEN * 2; i++) {
+            if (!diagArray[i].matches("[0-9].*")) {
+                resultString.append(delimiter + diagArray[i].substring(1, 4));
+                delimiter = ", ";
+            } else {
+                BigDecimal value = new BigDecimal(diagArray[i]);
+                NumArray.add(String.valueOf((value.doubleValue() < 1.7) ? value.setScale(1, RoundingMode.HALF_DOWN) : value.setScale(1, RoundingMode.HALF_UP)));
+            }
+        }
+        System.out.println(resultString);
+        System.out.println(String.join("_", NumArray));
+    }
 }

@@ -7,5 +7,8 @@ public class Runner {
     public static void main(String[] args) {
 
         main.fillMainArr();
+        main.createDiagArr();
+        main.equalsDiag();
+        main.point3_1();
     }
 }
