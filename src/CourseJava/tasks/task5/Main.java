@@ -1,9 +1,7 @@
 package CourseJava.tasks.task5;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -17,6 +15,13 @@ public class Main {
     private String[] diagArray = new String[TEN * 2];
 
     private final Random random = new Random();
+
+    public void run() {
+        fillMainArr();
+        createDiagArr();
+        equalsDiag();
+        point3();
+    }
 
     private String createRandomNumber() {
         String randNum;
@@ -34,8 +39,9 @@ public class Main {
         return word;
     }
 
-    public void fillMainArr() {
+    private void fillMainArr() {
         int x = 1;
+        System.out.println("Вывод матрицы 10 на 10:");
         for (int i = 0; i < TEN; i++) {
             for (int j = 0; j < TEN; j++) {
                 if ((x % 3) == 0) mainArray[i][j] = createRandomNumber();
@@ -47,17 +53,19 @@ public class Main {
         }
     }
 
-    public void equalsDiag() {
+    private void equalsDiag() {
         boolean isSame = true;
         int i = 0;
+        System.out.println("\n\nСравнение диагоналей:");
         while (isSame && i < TEN) {
             isSame = diagArray[i].equals(diagArray[TEN + i]);
             i++;
         }
-        System.out.println("\nequals diagonals is " + isSame);
+        System.out.println("equals diagonals is " + isSame + "\n");
     }
 
-    public void createDiagArr() {
+    private void createDiagArr() {
+        System.out.print("\nВывод массива из двух диагоналей:");
         for (int i = 0; i < TEN; i++) {
             diagArray[i] = mainArray[i][i];
             diagArray[TEN + i] = mainArray[(TEN-1)-i][i];
@@ -65,16 +73,16 @@ public class Main {
        printDiagArr(false);
     }
 
-    public void printDiagArr(boolean isUnderscore) {
+    private void printDiagArr(boolean isUnderscore) {
         System.out.println("");
         String underscore = "";
         for (int i = 0; i < TEN * 2; i++) {
-            System.out.printf(!isUnderscore ? " \n" + diagArray[i] : underscore + diagArray[i]);
+            System.out.printf(!isUnderscore ? diagArray[i] + ", " : underscore + diagArray[i]);
             underscore = "_";
         }
     }
 
-    public void point3_1() {
+    private void point3() {
         ArrayList<String> NumArray = new ArrayList<String>();
         StringBuilder resultString = new StringBuilder();
         String delimiter = "";
@@ -87,7 +95,8 @@ public class Main {
                 NumArray.add(String.valueOf((value.doubleValue() < 1.7) ? value.setScale(1, RoundingMode.HALF_DOWN) : value.setScale(1, RoundingMode.HALF_UP)));
             }
         }
-        System.out.println(resultString);
+        System.out.println("Вывод со 2 по 4 символ:\n" + resultString);
+        System.out.println("\nМассив чисел из диагоналей:");
         System.out.println(String.join("_", NumArray));
     }
 }
