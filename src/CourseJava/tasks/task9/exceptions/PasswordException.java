@@ -2,9 +2,12 @@ package CourseJava.tasks.task9.exceptions;
 
 public class PasswordException extends Exception {
 
-    private final String MESSAGE;
+    boolean isMatched;
 
     public PasswordException(String message) {
-        MESSAGE = message;
+        super(message);
+    }
+
+    public void setStackTrace() {
     }
 }

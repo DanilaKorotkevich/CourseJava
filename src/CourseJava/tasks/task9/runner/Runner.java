@@ -1,34 +1,56 @@
 package CourseJava.tasks.task9.runner;
 
-import CourseJava.tasks.task9.exceptions.FactorialException;
-import CourseJava.tasks.task9.exceptions.Login;
-import CourseJava.tasks.task9.exceptions.LoginException;
+import CourseJava.tasks.task9.exceptions.*;
 
 import java.util.Scanner;
 
 public class Runner {
 
     private static Login userName = new Login();
+    private static Password userPassword = new Password();
     private static final Scanner scanner = new Scanner(System.in);
     private static String login;
+    private static String password;
+    private static int number;
 
     public static void main(String[] args) {
 
-        try {
-            int result = Factorial.getFactorial(0);
-            System.out.println(result);
-        } catch (FactorialException e) {
-            System.err.println(e.getMessage());
-        }
+
 
         System.out.println("Введите логин: ");
         login = scanner.nextLine();
-
         try {
             userName.checkLogin(login);
         } catch (LoginException e) {
             System.err.println(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+        System.out.println("Введите пароль: ");
+            try {
+                password = scanner.nextLine();
+                userPassword.checkPassword(password);
+            } catch (PasswordException e) {
+                System.err.println(e.getMessage());
+            } finally {
+                System.out.println("Попробуйте снова)");
+            }
+
+        System.out.printf("Введите число, факториал которого вы хотите вычислить: ");
+        number = scanner.nextInt();
+        try {
+            printFactorial(number);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());;
+        }
+
+    }
+
+    public static int printFactorial(int number) throws Exception {
+            int result = Factorial.getFactorial(number);
+            System.out.println(result);
+            return result;
     }
 
 }
