@@ -19,23 +19,19 @@ public class Runner {
 
         System.out.println("Введите логин: ");
         login = scanner.nextLine();
+
         try {
             userName.checkLogin(login);
+            System.out.println("Введите пароль: ");
+            password = scanner.nextLine();
+            userPassword.checkPassword(password);
         } catch (LoginException e) {
             System.err.println(e.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (PasswordException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            System.out.println("Попробуйте снова)");
         }
-
-        System.out.println("Введите пароль: ");
-            try {
-                password = scanner.nextLine();
-                userPassword.checkPassword(password);
-            } catch (PasswordException e) {
-                System.err.println(e.getMessage());
-            } finally {
-                System.out.println("Попробуйте снова)");
-            }
 
         System.out.printf("Введите число, факториал которого вы хотите вычислить: ");
         number = scanner.nextInt();
