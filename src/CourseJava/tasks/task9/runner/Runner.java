@@ -38,14 +38,14 @@ public class Runner {
         try {
             printFactorial(number);
         } catch (Exception e) {
-            System.err.println(e.getMessage());;
+            System.err.println(e.getMessage());
         }
 
     }
 
     public static int printFactorial(int number) throws Exception {
             int result = Factorial.getFactorial(number);
-            System.out.println(result);
+            System.out.println("Факториал числа " + number + " равен " + result);
             return result;
     }
 
