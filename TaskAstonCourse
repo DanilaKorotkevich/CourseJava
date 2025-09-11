@@ -1,0 +1,413 @@
+-------------Main---------------
+package org.example;
+
+import org.example.Task1.Animal;
+import org.example.Task1.AnimalCreater;
+import org.example.Task1.Bowl;
+import org.example.Task2.Circle;
+import org.example.Task2.GeometricFigure;
+import org.example.Task2.Rectangle;
+import org.example.Task2.Triangle;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) {
+        AnimalCreater animalCreater = new AnimalCreater();
+        Bowl foodBowl = new Bowl();
+
+        /**Задание 1*/
+        /** 1 часть задания*/
+        animalCreater.addCat(5);
+        animalCreater.getCatList().get(0).run(150);
+        animalCreater.getCatList().get(1).swim(10);
+        System.out.println("Количество котов: " + animalCreater.getCatsCount() + "\n");
+
+        animalCreater.addDog(3);
+        animalCreater.getDogList().get(0).run(450);
+        animalCreater.getDogList().get(1).run(501);
+        animalCreater.getDogList().get(2).swim(10);
+        System.out.println("Количество собак: " + animalCreater.getDogsCount() + "\n");
+
+        System.out.println("Количество животных: " + Animal.getAnimalCount());
+
+        /**2 часть задания*/
+        foodBowl.fillBowl(10);
+        for (int i = 0; i < animalCreater.getCatList().size(); i++) {
+            System.out.print(i + 1 + ". ");
+            animalCreater.getCatList().get(i).eat(foodBowl);
+        }
+        System.out.println("\nКоличество еды в миске: " + foodBowl.foodAmount);
+
+        /**Задание 2*/
+        List<GeometricFigure> figures = new ArrayList<>();
+        figures.add(new Circle(5, "красный", "черный"));
+        figures.add(new Rectangle(10, 5, "Зеленый", "Желтый"));
+        figures.add(new Triangle(2, 3, 5, "синий", "серый"));
+        for (GeometricFigure figure : figures) {
+            print(figure);
+        }
+    }
+
+    public static void print(GeometricFigure figure) {
+        System.out.println("Фигура: " + figure.getFigureName());
+        System.out.println("Периметр: " + String.format("%.2f", figure.calcPerimeter()));
+        System.out.println("Площадь: " + String.format("%.2f", figure.calcArea()));
+        System.out.println("Цвет фона: " + figure.getBackgroundColor());
+        System.out.println("Цвет границы: " + figure.getBorderColor());
+        System.out.println("---------------------------");
+    }
+}
+---------------------------------------------------------------------
+----------------------Задание 1-------------------------------------
+-----------------------Animal----------------------------------------
+public abstract class Animal {
+    private static int animalCount = 0;
+    private String name;
+    private boolean isSwimming;
+    private boolean isRunning;
+
+    public Animal(String name, boolean isSwimming, boolean isRunning) {
+        this.name = name;
+        this.isSwimming = isSwimming;
+        this.isRunning = isRunning;
+        animalCount++;
+    }
+
+    public void run(int length) {
+        if (isRunning) {
+            System.out.println(name + " пробежал " + length + " м.");
+        } else {
+            System.out.println(name + " не умеет бегать!");
+        }
+
+    }
+    public void swim(int length) {
+
+        if (isSwimming) {
+            System.out.println(name + " проплыл " + length + " м.");
+        } else {
+            System.out.println(name + " не умеет плавать!");
+        }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public static int getAnimalCount() {
+        return animalCount;
+    }
+
+    @Override
+    public String toString() {
+        return "Animal{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+}
+------------------------------------------------------------------------------
+--------------------------------AnimalCreater-------------------------------------
+package org.example.Task1;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+public class AnimalCreater {
+    private List<Cat> catList = new ArrayList<>();
+    private List<Dog> dogList = new ArrayList<>();
+
+    public int getCatsCount() {
+        return catList.size();
+    }
+
+    public int getDogsCount() {
+        return dogList.size();
+    }
+
+    public void addCat(int amount) {
+        for (int i = 0; i < amount; i++) {
+            catList.add(new Cat(randName()));
+        }
+    }
+
+    public void addDog(int amount) {
+        for (int i = 0; i < amount; i++) {
+            dogList.add(new Dog(randName()));
+        }
+    }
+
+    private String randName() {
+        char[] vowels = {'а', 'е', 'ё', 'и', 'о', 'у', 'ы', 'э', 'ю', 'я'};
+        char[] consonants = {'б', 'в', 'г', 'д', 'ж', 'з', 'й', 'к', 'л', 'м',
+                'н', 'п', 'р', 'с', 'т', 'ф', 'х', 'ц', 'ч', 'ш', 'щ'};
+
+        Random random = new Random();
+        StringBuilder name = new StringBuilder();
+
+        boolean startWithVowel = random.nextBoolean();
+
+        for (int i = 0; i < 5; i++) {
+            if ((i % 2 == 0 && startWithVowel) || (i % 2 != 0 && !startWithVowel)) {
+                name.append(vowels[random.nextInt(vowels.length)]);
+            } else {
+                name.append(consonants[random.nextInt(consonants.length)]);
+            }
+        }
+        return Character.toUpperCase(name.charAt(0)) + name.substring(1);
+    }
+
+    public List<Cat> getCatList() {
+        return catList;
+    }
+
+    public List<Dog> getDogList() {
+        return dogList;
+    }
+}
+----------------------------------------------------------------------------------------
+--------------------------------Bowl---------------------------------------
+package org.example.Task1;
+
+public class Bowl {
+    private boolean isEmpty = true;
+    public int foodAmount;
+
+    public boolean isFill() {
+        return isEmpty = false;
+    }
+
+    public boolean isEmpty() {
+        return isEmpty = true;
+    }
+
+    public void fillBowl(int foodAmount) {
+        this.foodAmount += foodAmount;
+    }
+
+    public void emptyBowl(int foodAmount) {
+        this.foodAmount -= foodAmount;
+    }
+}
+-----------------------------------------------------------------------
+----------------------------Cat--------------------------------------
+package org.example.Task1;
+
+import java.util.Random;
+
+public class Cat extends Animal {
+    private int maxRunDistance = 200;
+    private boolean satiety;
+
+    public Cat(String name) {
+        super(name, false, true);
+        this.satiety = false;
+    }
+
+    public void eat(Bowl foodBowl) {
+        int foodAmount = randomFoodAmount();
+        while(!satiety) {
+            if (foodAmount <= foodBowl.foodAmount) {
+                satiety = true;
+                System.out.println("Кот: " + getName() + " съел: " + foodAmount + ", сытость: " + satiety);
+                foodBowl.emptyBowl(foodAmount);
+            } else {
+                System.out.println("Кот: " + getName() + ", сытость: " + satiety);
+                return;
+            }
+        }
+    }
+
+    private int randomFoodAmount() {
+        Random random = new Random();
+        return random.nextInt(6) + 15;
+    }
+    @Override
+    public void run(int length) {
+        if (length <= maxRunDistance) {
+            super.run(length);
+        } else {
+            System.out.println(super.getName() + " не может бежать " + length + " м.");
+        }
+
+    }
+
+    @Override
+    public void swim(int length) {
+        super.swim(length);
+    }
+}
+---------------------------------------------------------------------------
+----------------------------------Dog----------------------------------------
+package org.example.Task1;
+
+public class Dog extends Animal {
+    private int maxRunDistance = 500;
+    private int maxSwimDistance = 10;
+
+    public Dog(String name) {
+        super(name, true, true);
+    }
+
+    @Override
+    public void run(int length) {
+        if (length <= maxRunDistance) {
+            super.run(length);
+        } else {
+            System.out.println(super.getName() + " не может бежать " + length + " м.");
+        }
+    }
+
+    @Override
+    public void swim(int length) {
+        if (length <= maxSwimDistance) {
+            super.swim(length);
+        } else {
+            System.out.println(super.getName() + " не может плыть " + length + " м.");
+        }
+    }
+}
+------------------------------------------------------------------------
+-----------------------------Задание 2--------------------------------------
+---------------------------GeometryFigure--------------------------------
+package org.example.Task2;
+
+public interface GeometricFigure {
+    double calcPerimeter();
+    double calcArea();
+    String getFigureName();
+    String getBackgroundColor();
+    String getBorderColor();
+}
+--------------------------------------------------------------------------------
+-------------------------Circle--------------------------------------
+package org.example.Task2;
+
+public class Circle implements GeometricFigure {
+    private double radius;
+    private String name;
+    private String backgroundColor;
+    private String borderColor;
+
+    public Circle(double radius, String backgroundColor, String borderColor) {
+        this.radius = radius;
+        this.name = "Круг";
+        this.backgroundColor = backgroundColor;
+        this.borderColor = borderColor;
+    }
+
+    @Override
+    public double calcPerimeter() {
+        return 2 * Math.PI * radius;
+    }
+
+    @Override
+    public double calcArea() {
+        return Math.PI * radius * radius;
+    }
+
+    @Override
+    public String getFigureName() {
+        return name;
+    }
+
+    public String getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public String getBorderColor() {
+        return borderColor;
+    }
+}
+------------------------------------------------------------------------
+----------------------Rectangle------------------------------------
+package org.example.Task2;
+
+public class Rectangle implements GeometricFigure {
+    private double length;
+    private double width;
+    private String name;
+    private String backgroundColor;
+    private String borderColor;
+
+    public Rectangle(double length, double width, String backgroundColor, String borderColor) {
+        this.length = length;
+        this.width = width;
+        this.name = "Прямоугольник";
+        this.backgroundColor = backgroundColor;
+        this.borderColor = borderColor;
+    }
+
+    @Override
+    public double calcPerimeter() {
+        return 2 * (length + width);
+    }
+
+    @Override
+    public double calcArea() {
+        return length * width;
+    }
+
+    @Override
+    public String getFigureName() {
+        return name;
+    }
+
+    public String getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public String getBorderColor() {
+        return borderColor;
+    }
+}
+------------------------------------------------------------
+----------------------Triangle----------------------------------
+package org.example.Task2;
+
+public class Triangle implements GeometricFigure {
+    private double a;
+    private double b;
+    private double c;
+    private String name;
+    private String backgroundColor;
+    private String borderColor;
+
+    public Triangle(double a, double b, double c, String backgroundColor, String borderColor) {
+        this.a = a;
+        this.b = b;
+        this.c = c;
+        this.name = "треугольник";
+        this.backgroundColor = backgroundColor;
+        this.borderColor = borderColor;
+    }
+
+    @Override
+    public double calcPerimeter() {
+        return a + b + c;
+    }
+
+    @Override
+    public double calcArea() {
+        double p = calcPerimeter() / 2;
+        return Math.sqrt(p * (p - a) * (p - b) * (p - c));
+    }
+
+    @Override
+    public String getFigureName() {
+        return name;
+    }
+
+    @Override
+    public String getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    @Override
+    public String getBorderColor() {
+        return borderColor;
+    }
+}
+--------------------------------------------------------------------
