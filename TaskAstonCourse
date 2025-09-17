@@ -1,68 +1,158 @@
---------------Main---------------
 public class Main {
 
     public static void main(String[] args) {
-        String[][] array = {{"1", "21", "31", "17"},
-                            {"4", "1", "10", "6"},
-                            {"7", "2", "9", "45"},
-                            {"9", "1", "8", "4"}};
+        PhoneDirectory phoneDirectory = new PhoneDirectory();
+        /**Map*/
+        phoneDirectory.add("Лукьянова", "+375(44)493-87-84");
+        phoneDirectory.add("Соколов", "+375(33)755-79-53");
+        phoneDirectory.add("Гусева", "+375(29)324-81-70");
+        phoneDirectory.add("Кузнецов", "+375(44)358-87-64");
+        phoneDirectory.add("Семенова", "+375(29)689-46-41");
+        phoneDirectory.add("Голубев", "+375(29)071-92-51");
+        phoneDirectory.add("Баранова", "+375(33)755-93-51");
+        phoneDirectory.add("Федорова", "+375(44)095-86-09");
+        phoneDirectory.add("Клюева", "+375(29)896-53-89");
+        phoneDirectory.add("Мартынов", "+375(33)503-85-55");
+        phoneDirectory.add("Гусева", "+375(29)568-12-90");
+        phoneDirectory.add("Кузнецов", "+375(44)109-71-44");
 
-        try {
-            System.out.println("Сумма элементов массива: " + sumArrayElems(array));
-        } catch (MyArraySizeException e) {
-            System.err.println(e.getMessage());
-        } catch (MyArrayDataException e) {
-            e.printStackTrace();
-        }
+        phoneDirectory.get("Кузнецов");
 
-        /**Код для генерации и поимки ArrayIndexOutOfBoundsException.
-         * в цикле перебора элементов массива указал неверную длину массива (arr.length + 1).*/
-        int[] arr = {1, 2, 3, 4, 5, 6};
+        /**List*/
+        phoneDirectory.addInList("Лукьянова", "+375(44)493-87-84");
+        phoneDirectory.addInList("Соколов", "+375(33)755-79-53");
+        phoneDirectory.addInList("Гусева", "+375(29)324-81-70");
+        phoneDirectory.addInList("Кузнецов", "+375(44)358-87-64");
+        phoneDirectory.addInList("Семенова", "+375(29)689-46-41");
+        phoneDirectory.addInList("Голубев", "+375(29)071-92-51");
+        phoneDirectory.addInList("Баранова", "+375(33)755-93-51");
+        phoneDirectory.addInList("Федорова", "+375(44)095-86-09");
+        phoneDirectory.addInList("Клюева", "+375(29)896-53-89");
+        phoneDirectory.addInList("Мартынов", "+375(33)503-85-55");
+        phoneDirectory.addInList("Гусева", "+375(29)568-12-90");
+        phoneDirectory.addInList("Кузнецов", "+375(44)109-71-44");
 
-        try {
-            for (int i = 0; i < arr.length + 1; i++) {
-                System.out.println(arr[i]);
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static int sumArrayElems(String[][] array) throws MyArraySizeException, MyArrayDataException{
-        int[][] numsArr = new int[4][4];
-        int sum = 0;
-
-        for (int i = 0; i < array.length; i++) {
-            if (array.length != 4 || array[i].length != 4) {
-                throw new MyArraySizeException("Неверный размер массива! Формат входного массива 4x4.");
-            }
-            for (int j = 0; j < array[i].length; j++) {
-                try {
-                    numsArr[i][j] = Integer.parseInt(array[i][j]);
-                } catch (NumberFormatException e) {
-                    throw new MyArrayDataException("Не удалось преобразовать данные массива в ячейке: " + i + "x" + j + ".");
-                }
-                sum += numsArr[i][j];
-            }
-        }
-
-        return sum;
+        phoneDirectory.getFromList("Кузнецов");
     }
 }
----------------------------------------
-------------------MyArraySizeException------------------------
-public class MyArraySizeException extends Exception {
 
-    public MyArraySizeException(String message) {
-        super(message);
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class PhoneDirectory {
+    /**Вариант с испоьзованием Map, получается что тут никак не реализовать ситуацию с однофамильцами*/
+    Map<String, String> phoneDirMap = new HashMap<>();
+
+    public void add(String surname, String phoneNumber) {
+        phoneDirMap.put(surname, phoneNumber);
+    }
+
+    public void get(String name) {
+        System.out.println(name + ":\n" + phoneDirMap.get(name) + "\n");
+    }
+
+    @Override
+    public String toString() {
+        return "phoneDirMap: " + phoneDirMap;
+    }
+
+    /**Вариант через List, в этом случае нет связи ключ-значение, но реализован случай с однофамильцами*/
+    private List<String> surname = new ArrayList<>();
+    private List<String> phoneNumber = new ArrayList<>();
+
+    public void addInList(String name, String number) {
+        surname.add(name);
+        phoneNumber.add(number);
+    }
+
+    public void getFromList(String name) {
+        System.out.println(name + ":");
+        for (int i = 0; i < surname.size(); i++) {
+            if (name == surname.get(i)) {
+                System.out.println(phoneNumber.get(i));
+            }
+        }
     }
 }
---------------------------------------------------------------
-------------------MyArrayDataException------------------------
-public class MyArrayDataException extends Exception {
+--------------------------------------------------------------------------
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-    public MyArrayDataException(String message) {
-        super(message);
+public class PhoneDirectory {
+    /**Вариант с испоьзованием Map, получается что тут никак не реализовать ситуацию с однофамильцами*/
+    Map<String, String> phoneDirMap = new HashMap<>();
+
+    public void add(String surname, String phoneNumber) {
+        phoneDirMap.put(surname, phoneNumber);
+    }
+
+    public void get(String name) {
+        System.out.println(name + ":\n" + phoneDirMap.get(name) + "\n");
+    }
+
+    @Override
+    public String toString() {
+        return "phoneDirMap: " + phoneDirMap;
+    }
+
+    /**Вариант через List, в этом случае нет связи ключ-значение, но реализован случай с однофамильцами*/
+    private List<String> surname = new ArrayList<>();
+    private List<String> phoneNumber = new ArrayList<>();
+
+    public void addInList(String name, String number) {
+        surname.add(name);
+        phoneNumber.add(number);
+    }
+
+    public void getFromList(String name) {
+        System.out.println(name + ":");
+        for (int i = 0; i < surname.size(); i++) {
+            if (name == surname.get(i)) {
+                System.out.println(phoneNumber.get(i));
+            }
+        }
     }
 }
---------------------------------------------------------------
+
+
+public class Student {
+    private String name;
+    private String group;
+    private int course;
+    private int grade;
+
+    public Student(String name, String group, int course, int grade) {
+        this.name = name;
+        this.group = group;
+        this.course = course;
+        this.grade = grade;
+    }
+
+    public int getGrade() {
+        return grade;
+    }
+
+    public int getCourse() {
+        return course;
+    }
+
+    public void setCourse(int course) {
+        this.course += course;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return "name: " + name +
+                ", group: " + group +
+                ", course: " + course +
+                ", grade: " + grade;
+    }
+}
