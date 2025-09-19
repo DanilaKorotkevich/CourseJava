@@ -77,47 +77,76 @@ public class PhoneDirectory {
     }
 }
 --------------------------------------------------------------------------
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+package org.example.Task5.Task5_1;
 
-public class PhoneDirectory {
-    /**Вариант с испоьзованием Map, получается что тут никак не реализовать ситуацию с однофамильцами*/
-    Map<String, String> phoneDirMap = new HashMap<>();
+import java.util.*;
 
-    public void add(String surname, String phoneNumber) {
-        phoneDirMap.put(surname, phoneNumber);
+public class Main {
+
+    private static Collection<Student> studentCollection;
+    private static Set<Student> studentSet;
+
+    public static void main(String[] args) {
+        studentCollection = new ArrayList<>();
+
+        /**Добавление студентов в коллекцию*/
+        addStudent(studentCollection);
+        for (Student student : studentCollection) {
+            System.out.println(student);
+        }
+
+        /**Отчисление студентов + перевод на следующий курс*/
+        removeStudent(studentCollection);
+        switchCourse(studentCollection);
+        for (Student student : studentCollection) {
+            System.out.println(student);
+        }
+
+        /**Вывод студентов по номеру курса*/
+        studentSet = new HashSet<>(studentCollection);
+        printStudents(studentSet, 2);
     }
 
-    public void get(String name) {
-        System.out.println(name + ":\n" + phoneDirMap.get(name) + "\n");
+    private static void addStudent(Collection<Student> students) {
+        students.add(new Student("Иван", "АС-16", 1, 3));
+        students.add(new Student("Николай", "АС-16", 1, 5));
+        students.add(new Student("Анатолий", "АС-16", 1, 4));
+        students.add(new Student("Екатерина", "АС-26", 2, 5));
+        students.add(new Student("Никита", "АС-26", 2, 2));
+        students.add(new Student("Анастасия", "АС-26", 2, 3));
+        students.add(new Student("Евгений", "АС-36", 3, 4));
+        students.add(new Student("Анна", "АС-36", 3, 3));
+        students.add(new Student("Наталья", "АС-36", 3, 2));
     }
 
-    @Override
-    public String toString() {
-        return "phoneDirMap: " + phoneDirMap;
+    private static void removeStudent(Collection<Student> students) {
+        System.out.println();
+        Iterator<Student> iterator = students.iterator();
+        while (iterator.hasNext()) {
+            Student student = iterator.next();
+            if (student.getGrade() < 3) {
+                iterator.remove();
+            }
+        }
     }
 
-    /**Вариант через List, в этом случае нет связи ключ-значение, но реализован случай с однофамильцами*/
-    private List<String> surname = new ArrayList<>();
-    private List<String> phoneNumber = new ArrayList<>();
-
-    public void addInList(String name, String number) {
-        surname.add(name);
-        phoneNumber.add(number);
+    private static void switchCourse(Collection<Student> students) {
+        System.out.println();
+        for (Student student : students) {
+            if (student.getGrade() >= 3) {
+                student.setCourse(1);
+            }
+        }
     }
-
-    public void getFromList(String name) {
-        System.out.println(name + ":");
-        for (int i = 0; i < surname.size(); i++) {
-            if (name == surname.get(i)) {
-                System.out.println(phoneNumber.get(i));
+    private static void printStudents(Set<Student> students, int course) {
+        System.out.println();
+        for (Student student : students) {
+            if (student.getCourse() == course) {
+                System.out.println(student.getName());
             }
         }
     }
 }
-
 
 public class Student {
     private String name;
