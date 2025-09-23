@@ -1,187 +1,225 @@
 public class Main {
-
     public static void main(String[] args) {
-        PhoneDirectory phoneDirectory = new PhoneDirectory();
-        /**Map*/
-        phoneDirectory.add("Лукьянова", "+375(44)493-87-84");
-        phoneDirectory.add("Соколов", "+375(33)755-79-53");
-        phoneDirectory.add("Гусева", "+375(29)324-81-70");
-        phoneDirectory.add("Кузнецов", "+375(44)358-87-64");
-        phoneDirectory.add("Семенова", "+375(29)689-46-41");
-        phoneDirectory.add("Голубев", "+375(29)071-92-51");
-        phoneDirectory.add("Баранова", "+375(33)755-93-51");
-        phoneDirectory.add("Федорова", "+375(44)095-86-09");
-        phoneDirectory.add("Клюева", "+375(29)896-53-89");
-        phoneDirectory.add("Мартынов", "+375(33)503-85-55");
-        phoneDirectory.add("Гусева", "+375(29)568-12-90");
-        phoneDirectory.add("Кузнецов", "+375(44)109-71-44");
+        
+    }
+}
+----------------------------------------------------------
+public class TestingClass {
 
-        phoneDirectory.get("Кузнецов");
+    int a;
+    int b;
 
-        /**List*/
-        phoneDirectory.addInList("Лукьянова", "+375(44)493-87-84");
-        phoneDirectory.addInList("Соколов", "+375(33)755-79-53");
-        phoneDirectory.addInList("Гусева", "+375(29)324-81-70");
-        phoneDirectory.addInList("Кузнецов", "+375(44)358-87-64");
-        phoneDirectory.addInList("Семенова", "+375(29)689-46-41");
-        phoneDirectory.addInList("Голубев", "+375(29)071-92-51");
-        phoneDirectory.addInList("Баранова", "+375(33)755-93-51");
-        phoneDirectory.addInList("Федорова", "+375(44)095-86-09");
-        phoneDirectory.addInList("Клюева", "+375(29)896-53-89");
-        phoneDirectory.addInList("Мартынов", "+375(33)503-85-55");
-        phoneDirectory.addInList("Гусева", "+375(29)568-12-90");
-        phoneDirectory.addInList("Кузнецов", "+375(44)109-71-44");
+    public long calcFactorial(long n) {
+        if (n < 0) throw new IllegalArgumentException("Число не может быть отрицательным!");
+        return (n <= 1) ? 1 : n * calcFactorial(n - 1);
+    }
 
-        phoneDirectory.getFromList("Кузнецов");
+    public int calcSquare(int a, int h) {
+        if (a != 0 || h != 0) {
+            if ((a * h) % 2 != 0) {
+                throw new IllegalArgumentException("Результат не может быть с остатком!");
+            } else {
+                return (a * h) / 2;
+            }
+        } else {
+            System.out.println("Невалидные значения!");
+        }
+        return 0;
+    }
+
+    public int calculation(int a, int b, String operation) {
+        if (operation == "+" | operation == "-" | operation == "*" | operation == "/") {
+            switch (operation) {
+                case "+": return a + b;
+                case "-": return a - b;
+                case "*": return a * b;
+                case "/": if (b == 0) {
+                    System.out.println("деление на ноль невозможно!");
+                    return 0;
+                } else if (a % b != 0) {
+                    System.out.println("Деление c остатком невозможно!");
+                    return 0;
+                } else {
+                    return a / b;
+                }
+            }
+        } else {
+            System.err.println("Неверный ввод оператора!");
+            return 0;
+        }
+        return 0;
+    }
+
+    public int equalsNums(int a, int b) {
+        if (a == b) {
+            return 0;
+        }
+        if (a < b) {
+            return -1;
+        }
+        return 1;
+    }
+}
+-----------------------------------------------------------------
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class TestingClassJUnitTest {
+    private TestingClass testingClass;
+
+    @BeforeEach
+    public void setUp() {
+        testingClass = new TestingClass();
+    }
+
+    @Test
+    @DisplayName("Тест calcFactorial")
+    public void testFactorial() {
+        assertEquals(1L, testingClass.calcFactorial(0));
+        assertEquals(1L, testingClass.calcFactorial(1));
+        assertEquals(120L, testingClass.calcFactorial(5));
+        assertEquals(3628800L, testingClass.calcFactorial(10));
+        assertEquals(2432902008176640000L, testingClass.calcFactorial(20));
+    }
+
+    @Test
+    @DisplayName("Тест calcSquare")
+    public void testCalcSquare() {
+        //тест невалидных значений
+        assertEquals(0, testingClass.calcSquare(0, 5));
+        assertEquals(0, testingClass.calcSquare(10, 0));
+        //тест валидных значений
+        assertEquals(25, testingClass.calcSquare(5, 10));
+        assertEquals(60, testingClass.calcSquare(15, 8));
+    }
+
+    @Test
+    @DisplayName("Тест calculation")
+    public void testCalculation() {
+        assertEquals(25, testingClass.calculation(10, 15, "+"));
+        assertEquals(0, testingClass.calculation(-5, 5, "+"));
+
+        assertEquals(-5, testingClass.calculation(10, 15, "-"));
+        assertEquals(30, testingClass.calculation(56, 26, "-"));
+        assertEquals(26, testingClass.calculation(-7, -33, "-"));
+        assertEquals(24, testingClass.calculation(7, -17, "-"));
+
+        assertEquals(0, testingClass.calculation(5, 0, "*"));
+        assertEquals(40, testingClass.calculation(5, 8, "*"));
+        assertEquals(-6, testingClass.calculation(3, -2, "*"));
+        assertEquals(6, testingClass.calculation(-3, -2, "*"));
+
+        assertEquals(2, testingClass.calculation(4, 2, "/"));
+        assertEquals(0, testingClass.calculation(7, 3, "/"));
+        assertEquals(0, testingClass.calculation(8, 5, "/"));
+        assertEquals(0, testingClass.calculation(5, 0, "/"));
+        assertEquals(0, testingClass.calculation(2, 10, "/"));
+        assertEquals(-2, testingClass.calculation(-10, 5, "/"));
+        assertEquals(-5, testingClass.calculation(50, -10, "/"));
+    }
+
+    @Test
+    @DisplayName("Тест equalsNums")
+    public void testEqualsNums() {
+        assertEquals(-1, testingClass.equalsNums(5, 6));
+        assertEquals(0, testingClass.equalsNums(2, 2));
+        assertEquals(1, testingClass.equalsNums(7, 3));
+        assertEquals(0, testingClass.equalsNums(0, 0));
+        assertEquals(1, testingClass.equalsNums(14, 0));
+        assertEquals(-1, testingClass.equalsNums(0, 1));
+    }
+}
+-------------------------------------------------------------------------
+import org.example.Task6.TestingClass;
+import org.junit.jupiter.api.DisplayName;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import static org.testng.Assert.*;
+
+public class TestingClasTestNGTest {
+
+    private TestingClass testingClass;
+    @BeforeMethod
+    public void setUp() {
+        testingClass = new TestingClass();
+    }
+    @Test
+    @DisplayName("Тест calcFactorial")
+    public void testCalcFactorial() {
+        assertEquals(testingClass.calcFactorial(0), 1L);
+        assertEquals(testingClass.calcFactorial(1), 1L);
+    }
+
+    @Test
+    public void testCalcFactorialOfPositiveNumber() {
+        assertEquals(testingClass.calcFactorial(5), 120L);
+        assertEquals(testingClass.calcFactorial(10), 3628800L);
+        assertEquals(testingClass.calcFactorial(20), 2432902008176640000L);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testCalcFactorialOfNegativeNumber() {
+        testingClass.calcFactorial(-1);
+    }
+
+    @Test
+    @DisplayName("Тест calcSquare")
+    public void testCalcSquare() {
+        assertEquals(testingClass.calcSquare(2, 1), 1);
+    }
+
+    @Test
+    public void testCalcSquareOfPositiveNumbers() {
+        assertEquals(testingClass.calcSquare(5, 2), 5);
+        assertEquals(testingClass.calcSquare(7, 4), 14);
+        assertEquals(testingClass.calcSquare(5, 6), 15);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testCalcSquareOfNegativeNumbers() {
+        testingClass.calcSquare(5, 5);
+        testingClass.calcSquare(1, 1);
+    }
+
+    @Test
+    @DisplayName("Тест calculation")
+    public void testCalculatoin() {
+        assertEquals(testingClass.calculation(0, 0, "+"), 0);
+        assertEquals(testingClass.calculation(0, 0, "-"), 0);
+        assertEquals(testingClass.calculation(0, 0, "*"), 0);
+        assertEquals(testingClass.calculation(0, 1, "/"), 0);
+    }
+
+    @Test
+    public void testCalculationOfPositiveNumbers() {
+        assertEquals(testingClass.calculation(2, 2, "+"), 4);
+        assertEquals(testingClass.calculation(8, 3, "-"), 5);
+        assertEquals(testingClass.calculation(5, 9, "*"), 45);
+        assertEquals(testingClass.calculation(8, 4, "/"), 2);
+    }
+
+    @Test
+    public void testCalculationOfNegativeNumbers() {
+        assertEquals(testingClass.calculation(2, 4, "%"), 0);
+        assertEquals(testingClass.calculation(2, 0, "/"), 0);
+        assertEquals(testingClass.calculation(8, 3, "/"), 0);
+    }
+
+    @Test
+    @DisplayName("Тест equalsNums")
+    public void testEqualsNums() {
+        assertEquals(testingClass.equalsNums(0, 0), 0);
+        assertEquals(testingClass.equalsNums(1, 0), 1);
+        assertEquals(testingClass.equalsNums(0, 1), -1);
+    }
+
+    @Test
+    public void testEqualsNumsOfPositiveNumbers() {
+        assertEquals(testingClass.equalsNums(5, 5), 0);
+        assertEquals(testingClass.equalsNums(50, 29), 1);
+        assertEquals(testingClass.equalsNums(83, 109), -1);
     }
 }
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-public class PhoneDirectory {
-    /**Вариант с испоьзованием Map, получается что тут никак не реализовать ситуацию с однофамильцами*/
-    Map<String, String> phoneDirMap = new HashMap<>();
-
-    public void add(String surname, String phoneNumber) {
-        phoneDirMap.put(surname, phoneNumber);
-    }
-
-    public void get(String name) {
-        System.out.println(name + ":\n" + phoneDirMap.get(name) + "\n");
-    }
-
-    @Override
-    public String toString() {
-        return "phoneDirMap: " + phoneDirMap;
-    }
-
-    /**Вариант через List, в этом случае нет связи ключ-значение, но реализован случай с однофамильцами*/
-    private List<String> surname = new ArrayList<>();
-    private List<String> phoneNumber = new ArrayList<>();
-
-    public void addInList(String name, String number) {
-        surname.add(name);
-        phoneNumber.add(number);
-    }
-
-    public void getFromList(String name) {
-        System.out.println(name + ":");
-        for (int i = 0; i < surname.size(); i++) {
-            if (name == surname.get(i)) {
-                System.out.println(phoneNumber.get(i));
-            }
-        }
-    }
-}
---------------------------------------------------------------------------
-package org.example.Task5.Task5_1;
-
-import java.util.*;
-
-public class Main {
-
-    private static Collection<Student> studentCollection;
-    private static Set<Student> studentSet;
-
-    public static void main(String[] args) {
-        studentCollection = new ArrayList<>();
-
-        /**Добавление студентов в коллекцию*/
-        addStudent(studentCollection);
-        for (Student student : studentCollection) {
-            System.out.println(student);
-        }
-
-        /**Отчисление студентов + перевод на следующий курс*/
-        removeStudent(studentCollection);
-        switchCourse(studentCollection);
-        for (Student student : studentCollection) {
-            System.out.println(student);
-        }
-
-        /**Вывод студентов по номеру курса*/
-        studentSet = new HashSet<>(studentCollection);
-        printStudents(studentSet, 2);
-    }
-
-    private static void addStudent(Collection<Student> students) {
-        students.add(new Student("Иван", "АС-16", 1, 3));
-        students.add(new Student("Николай", "АС-16", 1, 5));
-        students.add(new Student("Анатолий", "АС-16", 1, 4));
-        students.add(new Student("Екатерина", "АС-26", 2, 5));
-        students.add(new Student("Никита", "АС-26", 2, 2));
-        students.add(new Student("Анастасия", "АС-26", 2, 3));
-        students.add(new Student("Евгений", "АС-36", 3, 4));
-        students.add(new Student("Анна", "АС-36", 3, 3));
-        students.add(new Student("Наталья", "АС-36", 3, 2));
-    }
-
-    private static void removeStudent(Collection<Student> students) {
-        System.out.println();
-        Iterator<Student> iterator = students.iterator();
-        while (iterator.hasNext()) {
-            Student student = iterator.next();
-            if (student.getGrade() < 3) {
-                iterator.remove();
-            }
-        }
-    }
-
-    private static void switchCourse(Collection<Student> students) {
-        System.out.println();
-        for (Student student : students) {
-            if (student.getGrade() >= 3) {
-                student.setCourse(1);
-            }
-        }
-    }
-    private static void printStudents(Set<Student> students, int course) {
-        System.out.println();
-        for (Student student : students) {
-            if (student.getCourse() == course) {
-                System.out.println(student.getName());
-            }
-        }
-    }
-}
-
-public class Student {
-    private String name;
-    private String group;
-    private int course;
-    private int grade;
-
-    public Student(String name, String group, int course, int grade) {
-        this.name = name;
-        this.group = group;
-        this.course = course;
-        this.grade = grade;
-    }
-
-    public int getGrade() {
-        return grade;
-    }
-
-    public int getCourse() {
-        return course;
-    }
-
-    public void setCourse(int course) {
-        this.course += course;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String toString() {
-        return "name: " + name +
-                ", group: " + group +
-                ", course: " + course +
-                ", grade: " + grade;
-    }
-}
