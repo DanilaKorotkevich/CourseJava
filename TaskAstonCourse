@@ -1,225 +1,174 @@
-public class Main {
-    public static void main(String[] args) {
-        
-    }
-}
-----------------------------------------------------------
-public class TestingClass {
+<dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.13.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.7.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>2.2.224</version>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>4.15.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>5.6.0</version>
+        </dependency>
+    </dependencies>
 
-    int a;
-    int b;
 
-    public long calcFactorial(long n) {
-        if (n < 0) throw new IllegalArgumentException("Число не может быть отрицательным!");
-        return (n <= 1) ? 1 : n * calcFactorial(n - 1);
-    }
-
-    public int calcSquare(int a, int h) {
-        if (a != 0 || h != 0) {
-            if ((a * h) % 2 != 0) {
-                throw new IllegalArgumentException("Результат не может быть с остатком!");
-            } else {
-                return (a * h) / 2;
-            }
-        } else {
-            System.out.println("Невалидные значения!");
-        }
-        return 0;
-    }
-
-    public int calculation(int a, int b, String operation) {
-        if (operation == "+" | operation == "-" | operation == "*" | operation == "/") {
-            switch (operation) {
-                case "+": return a + b;
-                case "-": return a - b;
-                case "*": return a * b;
-                case "/": if (b == 0) {
-                    System.out.println("деление на ноль невозможно!");
-                    return 0;
-                } else if (a % b != 0) {
-                    System.out.println("Деление c остатком невозможно!");
-                    return 0;
-                } else {
-                    return a / b;
-                }
-            }
-        } else {
-            System.err.println("Неверный ввод оператора!");
-            return 0;
-        }
-        return 0;
-    }
-
-    public int equalsNums(int a, int b) {
-        if (a == b) {
-            return 0;
-        }
-        if (a < b) {
-            return -1;
-        }
-        return 1;
-    }
-}
------------------------------------------------------------------
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class TestingClassJUnitTest {
-    private TestingClass testingClass;
+import java.time.Duration;
+import java.util.List;
+import java.util.NoSuchElementException;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
+
+public class FirstTest {
+
+    WebDriver driver;
+    WebDriverWait wait;
+
+    public static void main(String[] args) {
+        WebDriverManager.chromedriver().driverVersion("119.0.6045.105").setup();
+        WebDriver driver = new ChromeDriver();
+        try {
+            driver.get("https://www.google.com");
+            System.out.println("Page title: " + driver.getTitle());
+            Thread.sleep(2000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            driver.quit();
+        }
+    }
 
     @BeforeEach
-    public void setUp() {
-        testingClass = new TestingClass();
+    void stup() {
+        java.util.logging.Logger.getLogger("io.github.bonigarcia").setLevel(java.util.logging.Level.OFF);
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     @Test
-    @DisplayName("Тест calcFactorial")
-    public void testFactorial() {
-        assertEquals(1L, testingClass.calcFactorial(0));
-        assertEquals(1L, testingClass.calcFactorial(1));
-        assertEquals(120L, testingClass.calcFactorial(5));
-        assertEquals(3628800L, testingClass.calcFactorial(10));
-        assertEquals(2432902008176640000L, testingClass.calcFactorial(20));
+    void testGoogleTitle() {
+        driver.get("https://www.mts.by");
+        wait.until(titleIs("МТС – мобильный оператор в Беларуси"));
     }
 
     @Test
-    @DisplayName("Тест calcSquare")
-    public void testCalcSquare() {
-        //тест невалидных значений
-        assertEquals(0, testingClass.calcSquare(0, 5));
-        assertEquals(0, testingClass.calcSquare(10, 0));
-        //тест валидных значений
-        assertEquals(25, testingClass.calcSquare(5, 10));
-        assertEquals(60, testingClass.calcSquare(15, 8));
+    void testBlockName() {
+        driver.get("https://www.mts.by");
+        WebElement block = driver.findElement(By.className("pay__wrapper"));
+
+        WebElement title = block.findElement(By.tagName("h2"));
+
+        String actualTitle = title.getText();
+        String expectedText = "Онлайн пополнение без комиссии";
+        assertEquals(expectedText, actualTitle);
     }
 
     @Test
-    @DisplayName("Тест calculation")
-    public void testCalculation() {
-        assertEquals(25, testingClass.calculation(10, 15, "+"));
-        assertEquals(0, testingClass.calculation(-5, 5, "+"));
+    void testLogoExist() {
+        driver.get("https://www.mts.by");
+        WebElement block = driver.findElement(By.className("pay__partners"));
+        WebElement logosList = block.findElement(By.tagName("ul"));
 
-        assertEquals(-5, testingClass.calculation(10, 15, "-"));
-        assertEquals(30, testingClass.calculation(56, 26, "-"));
-        assertEquals(26, testingClass.calculation(-7, -33, "-"));
-        assertEquals(24, testingClass.calculation(7, -17, "-"));
+        List<WebElement> logosItems = logosList.findElements(By.tagName("li"));
+        assertEquals(5, logosItems.size());
 
-        assertEquals(0, testingClass.calculation(5, 0, "*"));
-        assertEquals(40, testingClass.calculation(5, 8, "*"));
-        assertEquals(-6, testingClass.calculation(3, -2, "*"));
-        assertEquals(6, testingClass.calculation(-3, -2, "*"));
+        for (int i = 0; i < logosItems.size(); i++) {
+            WebElement li = logosItems.get(i);
 
-        assertEquals(2, testingClass.calculation(4, 2, "/"));
-        assertEquals(0, testingClass.calculation(7, 3, "/"));
-        assertEquals(0, testingClass.calculation(8, 5, "/"));
-        assertEquals(0, testingClass.calculation(5, 0, "/"));
-        assertEquals(0, testingClass.calculation(2, 10, "/"));
-        assertEquals(-2, testingClass.calculation(-10, 5, "/"));
-        assertEquals(-5, testingClass.calculation(50, -10, "/"));
+            WebElement img = li.findElement(By.tagName("img"));
+            assertNotNull(img);
+
+            String src = img.getAttribute("src");
+            assertTrue(src != null && !src.isEmpty());
+        }
     }
 
     @Test
-    @DisplayName("Тест equalsNums")
-    public void testEqualsNums() {
-        assertEquals(-1, testingClass.equalsNums(5, 6));
-        assertEquals(0, testingClass.equalsNums(2, 2));
-        assertEquals(1, testingClass.equalsNums(7, 3));
-        assertEquals(0, testingClass.equalsNums(0, 0));
-        assertEquals(1, testingClass.equalsNums(14, 0));
-        assertEquals(-1, testingClass.equalsNums(0, 1));
+    void testServiceLink() {
+        driver.get("https://www.mts.by");
+        WebElement block = driver.findElement(By.className("pay__wrapper"));
+        WebElement link = block.findElement(By.tagName("a"));
+
+        String startUrl = driver.getCurrentUrl();
+
+        String text = link.getText();
+        String href = link.getAttribute("href");
+
+        assertTrue(href != null && !href.isEmpty());
+
+        link.click();
+
+        wait.until(ExpectedConditions.not(ExpectedConditions.urlToBe(startUrl)));
+
+        String newUrl = driver.getCurrentUrl();
+        assertTrue(!newUrl.equals(startUrl));
+        assertTrue(newUrl.contains("https://www.mts.by/help/poryadok-oplaty-i-bezopasnost-internet-platezhey"));
+    }
+
+    @Test
+    void testContinueButton() {
+        driver.get("https://www.mts.by");
+        WebElement phoneField = driver.findElement(By.className("phone"));
+        phoneField.click();
+        phoneField.sendKeys("297777777");
+
+        WebElement totalRubField = driver.findElement(By.className("total_rub"));
+        totalRubField.click();
+        totalRubField.sendKeys("50");
+
+        WebElement button = driver.findElement(By.className("button button__default "));
+        button.click();
+
+        assertTrue(isCardFormDisplayed());
+    }
+
+    private boolean isCardFormDisplayed() {
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("ng-tns-c1057872785-0")));
+
+            WebElement cardField = driver.findElement(By.className("content ng-tns-c2312288139-3"));
+            return cardField.isDisplayed();
+        } catch (TimeoutException | NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    @AfterEach
+    void teardown() {
+        driver.quit();
     }
 }
--------------------------------------------------------------------------
-import org.example.Task6.TestingClass;
-import org.junit.jupiter.api.DisplayName;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-
-import static org.testng.Assert.*;
-
-public class TestingClasTestNGTest {
-
-    private TestingClass testingClass;
-    @BeforeMethod
-    public void setUp() {
-        testingClass = new TestingClass();
-    }
-    @Test
-    @DisplayName("Тест calcFactorial")
-    public void testCalcFactorial() {
-        assertEquals(testingClass.calcFactorial(0), 1L);
-        assertEquals(testingClass.calcFactorial(1), 1L);
-    }
-
-    @Test
-    public void testCalcFactorialOfPositiveNumber() {
-        assertEquals(testingClass.calcFactorial(5), 120L);
-        assertEquals(testingClass.calcFactorial(10), 3628800L);
-        assertEquals(testingClass.calcFactorial(20), 2432902008176640000L);
-    }
-
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testCalcFactorialOfNegativeNumber() {
-        testingClass.calcFactorial(-1);
-    }
-
-    @Test
-    @DisplayName("Тест calcSquare")
-    public void testCalcSquare() {
-        assertEquals(testingClass.calcSquare(2, 1), 1);
-    }
-
-    @Test
-    public void testCalcSquareOfPositiveNumbers() {
-        assertEquals(testingClass.calcSquare(5, 2), 5);
-        assertEquals(testingClass.calcSquare(7, 4), 14);
-        assertEquals(testingClass.calcSquare(5, 6), 15);
-    }
-
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testCalcSquareOfNegativeNumbers() {
-        testingClass.calcSquare(5, 5);
-        testingClass.calcSquare(1, 1);
-    }
-
-    @Test
-    @DisplayName("Тест calculation")
-    public void testCalculatoin() {
-        assertEquals(testingClass.calculation(0, 0, "+"), 0);
-        assertEquals(testingClass.calculation(0, 0, "-"), 0);
-        assertEquals(testingClass.calculation(0, 0, "*"), 0);
-        assertEquals(testingClass.calculation(0, 1, "/"), 0);
-    }
-
-    @Test
-    public void testCalculationOfPositiveNumbers() {
-        assertEquals(testingClass.calculation(2, 2, "+"), 4);
-        assertEquals(testingClass.calculation(8, 3, "-"), 5);
-        assertEquals(testingClass.calculation(5, 9, "*"), 45);
-        assertEquals(testingClass.calculation(8, 4, "/"), 2);
-    }
-
-    @Test
-    public void testCalculationOfNegativeNumbers() {
-        assertEquals(testingClass.calculation(2, 4, "%"), 0);
-        assertEquals(testingClass.calculation(2, 0, "/"), 0);
-        assertEquals(testingClass.calculation(8, 3, "/"), 0);
-    }
-
-    @Test
-    @DisplayName("Тест equalsNums")
-    public void testEqualsNums() {
-        assertEquals(testingClass.equalsNums(0, 0), 0);
-        assertEquals(testingClass.equalsNums(1, 0), 1);
-        assertEquals(testingClass.equalsNums(0, 1), -1);
-    }
-
-    @Test
-    public void testEqualsNumsOfPositiveNumbers() {
-        assertEquals(testingClass.equalsNums(5, 5), 0);
-        assertEquals(testingClass.equalsNums(50, 29), 1);
-        assertEquals(testingClass.equalsNums(83, 109), -1);
-    }
-}
-
-
